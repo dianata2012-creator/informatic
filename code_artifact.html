@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="uk" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Діана Бойко — Вчитель інформатики | Цифрова освіта та ШІ</title>
+    <!-- Підключення Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Підключення шрифтів Inter та JetBrains Mono для елементів коду -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Підключення іконок Lucide -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        indigo: {
+                            950: '#1e1b4b',
+                        },
+                        mint: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            400: '#2dd4bf',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                        }
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 40px -10px rgba(79, 70, 229, 0.08)',
+                        'glow': '0 0 25px rgba(20, 184, 166, 0.25)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Додаткові стилі для плавних переходів та декоративних сіток */
+        .bg-grid-pattern {
+            background-image: radial-gradient(rgba(79, 70, 229, 0.12) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        /* Анімація курсора терміналу */
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        .cursor-blink {
+            animation: blink 1s infinite;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-indigo-600 selection:text-white">
+
+    <!-- 1. НАВІГАЦІЙНЕ МЕНЮ (STICKY HEADER) -->
+    <header class="sticky top-0 z-40 glass-nav border-b border-slate-200/80 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Логотип / Ім'я -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-600 to-teal-500 flex items-center justify-center text-white font-mono font-bold text-lg shadow-md group-hover:scale-105 transition-transform">
+                        &lt;/&gt;
+                    </div>
+                    <div>
+                        <span class="block font-bold text-slate-900 text-lg leading-tight tracking-tight">Діана Бойко</span>
+                        <span class="block text-xs font-medium text-indigo-600">CS &amp; AI Educator</span>
+                    </div>
+                </a>
+
+                <!-- Десктопна навігація -->
+                <nav class="hidden lg:flex items-center gap-7 text-sm font-medium text-slate-600">
+                    <a href="#about" class="hover:text-indigo-600 transition-colors py-2">Про мене</a>
+                    <a href="#students" class="hover:text-indigo-600 transition-colors py-2">Учням</a>
+                    <a href="#parents" class="hover:text-indigo-600 transition-colors py-2">Батькам</a>
+                    <a href="#colleagues" class="hover:text-indigo-600 transition-colors py-2 flex items-center gap-1.5">
+                        <span>Колегам</span>
+                        <span class="px-2 py-0.5 text-[11px] font-semibold bg-teal-100 text-teal-800 rounded-full">ШІ-хаб</span>
+                    </a>
+                    <a href="#achievements" class="hover:text-indigo-600 transition-colors py-2">Досягнення</a>
+                    <a href="#contacts" class="hover:text-indigo-600 transition-colors py-2">Контакти</a>
+                </nav>
+
+                <!-- CTA Кнопка та мобільне меню -->
+                <div class="flex items-center gap-3">
+                    <a href="#contacts" class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold shadow-sm hover:shadow-indigo-500/30 transition-all active:scale-95">
+                        <i data-lucide="message-square-plus" class="w-4 h-4"></i>
+                        <span>Консультація / Зв'язатися</span>
+                    </a>
+                    
+                    <!-- Кнопка відкриття мобільного меню -->
+                    <button id="mobile-menu-btn" aria-label="Відкрити меню" class="lg:hidden p-2.5 rounded-xl text-slate-600 hover:bg-slate-100 focus:outline-none">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Мобільне випадаюче меню -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-6 space-y-2 shadow-xl">
+            <a href="#about" class="mobile-link block px-4 py-3 rounded-xl text-base font-medium text-slate-700 hover:bg-indigo-50 hover:text-indigo-600">Про мене</a>
+            <a href="#students" class="mobile-link block px-4 py-3 rounded-xl text-base font-medium text-slate-700 hover:bg-indigo-50 hover:text-indigo-600">Учням</a>
+            <a href="#parents" class="mobile-link block px-4 py-3 rounded-xl text-base font-medium text-slate-700 hover:bg-indigo-50 hover:text-indigo-600">Батькам (9 клас &amp; безпека)</a>
+            <a href="#colleagues" class="mobile-link block px-4 py-3 rounded-xl text-base font-medium text-slate-700 hover:bg-indigo-50 hover:text-indigo-600 flex items-center justify-between">
+                <span>Колегам (ШІ в освіті)</span>
+                <span class="px-2.5 py-0.5 text-xs font-semibold bg-teal-100 text-teal-800 rounded-full">AI Lab</span>
+            </a>
+            <a href="#achievements" class="mobile-link block px-4 py-3 rounded-xl text-base font-medium text-slate-700 hover:bg-indigo-50 hover:text-indigo-600">Досягнення</a>
+            <a href="#contacts" class="mobile-link block px-4 py-3 rounded-xl text-base font-medium text-slate-700 hover:bg-indigo-50 hover:text-indigo-600">Контакти</a>
+            <div class="pt-2">
+                <a href="#contacts" class="mobile-link flex items-center justify-center gap-2 w-full px-5 py-3 rounded-xl bg-indigo-600 text-white font-semibold">
+                    <i data-lucide="send" class="w-4 h-4"></i>
+                    <span>Консультація / Зв'язатися</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. ГОЛОВНИЙ ЕКРАН (HERO SECTION) -->
+    <section class="relative overflow-hidden bg-gradient-to-b from-indigo-50/70 via-white to-slate-50 pt-12 pb-20 lg:pt-20 lg:pb-28 bg-grid-pattern">
+        <!-- Декоративні розмиті плями -->
+        <div class="absolute top-10 left-10 w-72 h-72 bg-indigo-300/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-10 right-10 w-80 h-80 bg-teal-300/20 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+                
+                <!-- Ліва колонка: Привітання, місія, кнопки -->
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-indigo-100 shadow-sm text-xs sm:text-sm font-medium text-indigo-700">
+                        <span class="w-2 h-2 rounded-full bg-teal-500 animate-pulse"></span>
+                        <span>Щасливський академічний ліцей • Київська область</span>
+                    </div>
+
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.15]">
+                        Вітаю! Я — <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-teal-500">Діана Бойко</span>
+                    </h1>
+
+                    <p class="text-lg sm:text-xl font-medium text-indigo-950/80 max-w-2xl mx-auto lg:mx-0">
+                        Вчитель інформатики та класний керівник 9 класу.
+                    </p>
+
+                    <blockquote class="p-5 rounded-2xl bg-white/90 border-l-4 border-teal-500 shadow-soft text-slate-700 text-base sm:text-lg italic max-w-2xl mx-auto lg:mx-0">
+                        «Навчаю розуміти технології, мислити критично та створювати майбутнє безпечно»
+                    </blockquote>
+
+                    <!-- Кнопки швидкого переходу -->
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                        <a href="#students" class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold shadow-lg shadow-indigo-600/25 transition-all hover:-translate-y-0.5">
+                            <i data-lucide="book-open-check" class="w-5 h-5"></i>
+                            <span>Матеріали уроків</span>
+                        </a>
+                        <a href="#colleagues" class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-2xl bg-white hover:bg-teal-50 text-slate-800 border border-slate-200 hover:border-teal-300 font-semibold shadow-sm transition-all hover:-translate-y-0.5">
+                            <i data-lucide="sparkles" class="w-5 h-5 text-teal-600"></i>
+                            <span>ШІ-майстерня для вчителів</span>
+                        </a>
+                    </div>
+
+                    <!-- Швидкі теги компетенцій -->
+                    <div class="pt-4 flex flex-wrap items-center justify-center lg:justify-start gap-2 text-xs font-mono text-slate-500">
+                        <span class="px-3 py-1 bg-slate-100 rounded-lg">#Python</span>
+                        <span class="px-3 py-1 bg-slate-100 rounded-lg">#Processing</span>
+                        <span class="px-3 py-1 bg-slate-100 rounded-lg">#Scratch</span>
+                        <span class="px-3 py-1 bg-slate-100 rounded-lg">#3D_Aladdin</span>
+                        <span class="px-3 py-1 bg-teal-50 text-teal-700 rounded-lg">#AI_in_Education</span>
+                        <span class="px-3 py-1 bg-indigo-50 text-indigo-700 rounded-lg">#ЦифроваІнклюзія</span>
+                    </div>
+                </div>
+
+                <!-- Права колонка: Сучасна візуальна композиція з елементами коду та інтерфейсу -->
+                <div class="lg:col-span-5">
+                    <div class="relative mx-auto max-w-md lg:max-w-none">
+                        <!-- Картка редактора коду -->
+                        <div class="rounded-3xl bg-slate-900 text-slate-100 p-6 shadow-2xl border border-slate-800 relative z-10">
+                            <!-- Верхня панель вікна -->
+                            <div class="flex items-center justify-between pb-4 mb-4 border-b border-slate-800">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-3 h-3 rounded-full bg-rose-500"></span>
+                                    <span class="w-3 h-3 rounded-full bg-amber-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+                                </div>
+                                <span class="text-xs font-mono text-slate-400">future_skills.py</span>
+                                <span class="px-2 py-0.5 text-[10px] font-mono bg-teal-500/20 text-teal-300 rounded">Active</span>
+                            </div>
+
+                            <!-- Код -->
+                            <pre class="font-mono text-xs sm:text-sm leading-relaxed overflow-x-auto"><code><span class="text-indigo-400">class</span> <span class="text-teal-300">DigitalClassroom</span>:
+    <span class="text-indigo-400">def</span> <span class="text-sky-300">__init__</span>(<span class="text-amber-300">self</span>):
+        <span class="text-amber-300">self</span>.teacher = <span class="text-emerald-300">"Діана Бойко"</span>
+        <span class="text-amber-300">self</span>.school = <span class="text-emerald-300">"Щасливський ліцей"</span>
+        <span class="text-amber-300">self</span>.tools = [<span class="text-emerald-300">"Python"</span>, <span class="text-emerald-300">"Gemini"</span>, <span class="text-emerald-300">"3D"</span>]
+
+    <span class="text-indigo-400">def</span> <span class="text-sky-300">inspire</span>(<span class="text-amber-300">self</span>, student):
+        <span class="text-slate-400"># Розвиток критичного мислення</span>
+        student.creativity += <span class="text-purple-400">100</span>
+        student.cyber_safety = <span class="text-rose-400">True</span>
+        <span class="text-indigo-400">return</span> <span class="text-emerald-300">"Готові до майбутнього!"</span><span class="cursor-blink text-teal-400">▋</span></code></pre>
+
+                            <!-- Нижній статус-бар -->
+                            <div class="mt-5 pt-4 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+                                <div class="flex items-center gap-2">
+                                    <i data-lucide="cpu" class="w-4 h-4 text-teal-400"></i>
+                                    <span>STEM &amp; AI Ready</span>
+                                </div>
+                                <span class="font-mono text-teal-400">100% Інклюзивність</span>
+                            </div>
+                        </div>
+
+                        <!-- Плаваючий бейдж 1: Google AI -->
+                        <div class="hidden sm:flex items-center gap-3 bg-white p-3.5 rounded-2xl shadow-xl border border-slate-100 absolute -bottom-6 -left-6 z-20">
+                            <div class="w-10 h-10 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center">
+                                <i data-lucide="bot" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs font-bold text-slate-900">AI Academy</p>
+                                <p class="text-[11px] text-slate-500">Інтеграція ШІ в уроки</p>
+                            </div>
+                        </div>
+
+                        <!-- Плаваючий бейдж 2: 9 Клас -->
+                        <div class="hidden sm:flex items-center gap-3 bg-white p-3.5 rounded-2xl shadow-xl border border-slate-100 absolute -top-5 -right-4 z-20">
+                            <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center">
+                                <i data-lucide="users" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs font-bold text-slate-900">Класний керівник</p>
+                                <p class="text-[11px] text-slate-500">9 клас • Менторство</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. РОЗДІЛ «ПРО МЕНЕ» -->
+    <section id="about" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-xs font-bold uppercase tracking-wider text-teal-600 bg-teal-50 px-3 py-1.5 rounded-full">Знайомство</span>
+                <h2 class="mt-3 text-3xl sm:text-4xl font-bold text-slate-900">Про мене та педагогічну філософію</h2>
+                <p class="mt-4 text-slate-600 text-lg">Поєдную класичну алгоритмічну базу з найсучаснішими інструментами штучного інтелекту та інклюзивними підходами.</p>
+            </div>
+
+            <div class="grid lg:grid-cols-12 gap-10 items-start">
+                <!-- Ліва картка профілю -->
+                <div class="lg:col-span-5 bg-slate-50 rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-soft">
+                    <div class="flex flex-col sm:flex-row lg:flex-col items-center text-center sm:text-left lg:text-center gap-6">
+                        <div class="relative">
+                            <div class="w-32 h-32 sm:w-36 sm:h-36 rounded-3xl overflow-hidden bg-gradient-to-tr from-indigo-600 to-teal-500 p-1 shadow-lg">
+                                <!-- Аватар-ілюстрація з надійним fallback -->
+                                <div class="w-full h-full bg-white rounded-[20px] flex flex-col items-center justify-center text-indigo-900 relative overflow-hidden">
+                                    <svg class="w-24 h-24 text-indigo-600 mt-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <circle cx="12" cy="8" r="4" fill="#e0e7ff"/>
+                                        <path d="M5 20c0-3.866 3.134-7 7-7s7 3.134 7 7" stroke-linecap="round"/>
+                                        <path d="M16 4l2 2-2 2M8 4L6 6l2 2" stroke="#0d9488" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <span class="absolute -bottom-2 -right-2 bg-teal-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow">
+                                Онлайн &amp; Офлайн
+                            </span>
+                        </div>
+
+                        <div>
+                            <h3 class="text-2xl font-bold text-slate-900">Діана Бойко</h3>
+                            <p class="text-indigo-600 font-medium mt-1">Вчитель інформатики</p>
+                            <p class="text-sm text-slate-500 mt-1">Щасливський академічний ліцей Пристоличної сільської ради</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 pt-6 border-t border-slate-200 space-y-4">
+                        <div class="flex items-start gap-3">
+                            <div class="w-9 h-9 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center shrink-0 mt-0.5">
+                                <i data-lucide="graduation-cap" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-bold text-slate-900">Освіта та кваліфікація</h4>
+                                <p class="text-sm text-slate-600">Вища педагогічна та ІТ-освіта. Постійний учасник міжнародних та всеукраїнських програм підвищення кваліфікації (Google, EdEra, Дія.Освіта).</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-3">
+                            <div class="w-9 h-9 rounded-xl bg-teal-100 text-teal-600 flex items-center justify-center shrink-0 mt-0.5">
+                                <i data-lucide="heart-handshake" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-bold text-slate-900">Класне керівництво (9 клас)</h4>
+                                <p class="text-sm text-slate-600">Супроводжую дев'ятикласників у важливий рік самовизначення, вибору профілю навчання, розвитку емоційного інтелекту та профорієнтації в цифрову епоху.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Права колонка: Кредо та ключові напрями -->
+                <div class="lg:col-span-7 space-y-6">
+                    <!-- Педагогічне кредо -->
+                    <div class="p-7 rounded-3xl bg-gradient-to-br from-indigo-900 to-indigo-950 text-white shadow-xl relative overflow-hidden">
+                        <i data-lucide="quote" class="w-16 h-16 text-white/10 absolute top-4 right-6"></i>
+                        <span class="text-xs font-mono uppercase tracking-widest text-teal-300">Педагогічне кредо</span>
+                        <p class="mt-3 text-xl sm:text-2xl font-semibold leading-relaxed">
+                            «Сучасний урок інформатики — це не просто вивчення кнопок чи синтаксису. Це простір, де кожна дитина, незалежно від її освітніх потреб, відкриває в собі творця, дослідника та свідомого громадянина цифрового світу».
+                        </p>
+                    </div>
+
+                    <!-- 3 Ключові напрями роботи -->
+                    <div class="grid sm:grid-cols-3 gap-5">
+                        <!-- Напрям 1 -->
+                        <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200/80 hover:border-indigo-300 hover:shadow-md transition-all">
+                            <div class="w-12 h-12 rounded-2xl bg-indigo-600 text-white flex items-center justify-center mb-4 shadow-sm">
+                                <i data-lucide="code-2" class="w-6 h-6"></i>
+                            </div>
+                            <h4 class="font-bold text-slate-900 text-lg">Інформатика та код</h4>
+                            <p class="mt-2 text-sm text-slate-600 leading-relaxed">
+                                Від візуальних алгоритмів у Scratch та креативного кодингу в Processing до прикладної розробки на Python.
+                            </p>
+                        </div>
+
+                        <!-- Напрям 2 -->
+                        <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200/80 hover:border-teal-300 hover:shadow-md transition-all">
+                            <div class="w-12 h-12 rounded-2xl bg-teal-500 text-white flex items-center justify-center mb-4 shadow-sm">
+                                <i data-lucide="box" class="w-6 h-6"></i>
+                            </div>
+                            <h4 class="font-bold text-slate-900 text-lg">STEM та 3D-світ</h4>
+                            <p class="mt-2 text-sm text-slate-600 leading-relaxed">
+                                Інженерне мислення, 3D-моделювання в середовищі Aladdin, дослідження енергоефективності та міжпредметні проєкти.
+                            </p>
+                        </div>
+
+                        <!-- Напрям 3 -->
+                        <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200/80 hover:border-sky-300 hover:shadow-md transition-all">
+                            <div class="w-12 h-12 rounded-2xl bg-sky-600 text-white flex items-center justify-center mb-4 shadow-sm">
+                                <i data-lucide="accessibility" class="w-6 h-6"></i>
+                            </div>
+                            <h4 class="font-bold text-slate-900 text-lg">Цифрова інклюзія</h4>
+                            <p class="mt-2 text-sm text-slate-600 leading-relaxed">
+                                Адаптація навчальних матеріалів, візуальні підказки, диференційовані завдання та ШІ-асистенти для підтримки кожного учня.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. РОЗДІЛ «УЧНЯМ» (З ІНТЕРАКТИВНИМ ФІЛЬТРОМ ПО КЛАСАХ) -->
+    <section id="students" class="py-20 bg-slate-50 border-t border-slate-200/70">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 bg-indigo-100 px-3 py-1.5 rounded-full">Навчальний простір</span>
+                    <h2 class="mt-3 text-3xl sm:text-4xl font-bold text-slate-900">Учням: Уроки, проєкти та практикуми</h2>
+                    <p class="mt-3 text-slate-600 max-w-2xl">Оберіть свою паралель класів, щоб знайти інтерактивні завдання, стартові шаблони коду, 3D-інструкції та пам'ятки.</p>
+                </div>
+
+                <!-- Інтерактивний фільтр по класах -->
+                <div class="flex flex-wrap gap-2 bg-white p-1.5 rounded-2xl border border-slate-200 shadow-sm" role="tablist" aria-label="Фільтр класів">
+                    <button class="grade-filter-btn active px-4 py-2.5 rounded-xl text-sm font-semibold transition-all bg-indigo-600 text-white shadow-sm" data-grade="all">
+                        Усі класи
+                    </button>
+                    <button class="grade-filter-btn px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-100 transition-all" data-grade="5-6">
+                        5–6 класи
+                    </button>
+                    <button class="grade-filter-btn px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-100 transition-all" data-grade="7-8">
+                        7–8 класи
+                    </button>
+                    <button class="grade-filter-btn px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-100 transition-all" data-grade="9">
+                        9 клас
+                    </button>
+                    <button class="grade-filter-btn px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-100 transition-all" data-grade="10-11">
+                        10–11 класи
+                    </button>
+                </div>
+            </div>
+
+            <!-- Сітка карток завдань -->
+            <div id="students-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- Картка 1: 5-6 класи (Scratch) -->
+                <article class="student-card bg-white rounded-3xl p-6 border border-slate-200/80 shadow-soft hover:shadow-lg transition-all flex flex-col justify-between" data-grade="5-6">
+                    <div>
+                        <div class="flex items-center justify-between gap-2 mb-4">
+                            <span class="px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800">5–6 класи</span>
+                            <span class="text-xs font-mono text-slate-400">Scratch • Логіка</span>
+                        </div>
+                        <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center mb-4">
+                            <i data-lucide="gamepad-2" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900">Створення інтерактивної еко-гри у Scratch</h3>
+                        <p class="mt-2 text-sm text-slate-600 leading-relaxed">
+                            Вивчаємо цикли, умови та змінні через розробку міні-гри «Сортуй сміття правильно». Покрокова візуальна інструкція для кожного.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="text-xs font-medium text-teal-600 flex items-center gap-1">
+                            <i data-lucide="check-circle-2" class="w-4 h-4"></i> Інтерактивний практикум
+                        </span>
+                        <button onclick="openModal('scratch-5-6')" class="inline-flex items-center gap-1.5 text-sm font-semibold text-indigo-600 hover:text-indigo-800">
+                            <span>Відкрити</span>
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Картка 2: 5-6 класи (Кібербезпека) -->
+                <article class="student-card bg-white rounded-3xl p-6 border border-slate-200/80 shadow-soft hover:shadow-lg transition-all flex flex-col justify-between" data-grade="5-6">
+                    <div>
+                        <div class="flex items-center justify-between gap-2 mb-4">
+                            <span class="px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800">5–6 класи</span>
+                            <span class="text-xs font-mono text-slate-400">Безпека • Interland</span>
+                        </div>
+                        <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-4">
+                            <i data-lucide="shield-check" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900">Кібер-щит: Паролі та захист від фішингу</h3>
+                        <p class="mt-2 text-sm text-slate-600 leading-relaxed">
+                            Пам'ятка зі створення надійних паролів, розпізнавання фейкових повідомлень у месенджерах та квест у Google Interland.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="text-xs font-medium text-teal-600 flex items-center gap-1">
+                            <i data-lucide="file-text" class="w-4 h-4"></i> Пам'ятка + Квест
+                        </span>
+                        <button onclick="openModal('cyber-5-6')" class="inline-flex items-center gap-1.5 text-sm font-semibold text-indigo-600 hover:text-indigo-800">
+                            <span>Відкрити</span>
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Картка 3: 7-8 класи (Processing) -->
+                <article class="student-card bg-white rounded-3xl p-6 border border-slate-200/80 shadow-soft hover:shadow-lg transition-all flex flex-col justify-between" data-grade="7-8">
+                    <div>
+                        <div class="flex items-center justify-between gap-2 mb-4">
+                            <span class="px-3 py-1 rounded-full text-xs font-bold bg-sky-100 text-sky-800">7–8 класи</span>
+                            <span class="text-xs font-mono text-slate-400">Processing • Код-арт</span>
+                        </div>
+                        <div class="w-12 h-12 rounded-2xl bg-sky-50 text-sky-600 flex items-center justify-center mb-4">
+                            <i data-lucide="palette" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900">Генеративна графіка та анімація в Processing</h3>
+                        <p class="mt-2 text-sm text-slate-600 leading-relaxed">
+                            Малюємо кодом! Координатна площина, RGB-кольори, рух об'єктів за курсором миші та створення власного цифрового постеру.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="text-xs font-medium text-teal-600 flex items-center gap-1">
+                            <i data-lucide="code" class="w-4 h-4"></i> Шаблон скетчу
+                        </span>
+                        <button onclick="openModal('processing-7-8')" class="inline-flex items-center gap-1.5 text-sm font-semibold text-indigo-600 hover:text-indigo-800">
+                            <span>Відкрити</span>
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Картка 4: 7-8 класи (3D Aladdin) -->
+                <article class="student-card bg-white rounded-3xl p-6 border border-slate-200/80 shadow-soft hover:shadow-lg transition-all flex flex-col justify-between" data-grade="7-8">
+                    <div>
+                        <div class="flex items-center justify-between gap-2 mb-4">
+                            <span class="px-3 py-1 rounded-full text-xs font-bold bg-sky-100 text-sky-800">7–8 класи</span>
+                            <span class="text-xs font-mono text-slate-400">3D • Aladdin</span>
+                        </div>
+                        <div class="w-12 h-12 rounded-2xl bg-teal-50 text-teal-600 flex items-center justify-center mb-4">
+                            <i data-lucide="boxes" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900">3D-моделювання еко-будинку в Aladdin</h3>
+                        <p class="mt-2 text-sm text-slate-600 leading-relaxed">
+                            Проєктуємо енергоефективний будинок майбутнього з сонячними панелями. Досліджуємо освітленість та теплові втрати моделі.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="text-xs font-medium text-teal-600 flex items-center gap-1">
+                            <i data-lucide="layers" class="w-4 h-4"></i> STEM-практикум
+                        </span>
+                        <button onclick="openModal('aladdin-7-8')" class="inline-flex items-center gap-1.5 text-sm font-semibold text-indigo-600 hover:text-indigo-800">
+                            <span>Відкрити</span>
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Картка 5: 9 клас (Python + ШІ) -->
+                <article class="student-card bg-white rounded-3xl p-6 border border-slate-200/80 shadow-soft hover:shadow-lg transition-all flex flex-col justify-between" data-grade="9">
+                    <div>
+                        <div class="flex items-center justify-between gap-2 mb-4">
+                            <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-800">9 клас</span>
+                            <span class="text-xs font-mono text-slate-400">Python • Алгоритми</span>
+                        </div>
+                        <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center mb-4">
+                            <i data-lucide="terminal" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900">Python: Обробка даних та створення чат-бота</h3>
+                        <p class="mt-2 text-sm text-slate-600 leading-relaxed">
+                            Списки, словники, робота з файлами та побудова графіків. Практичний проєкт «Калькулятор енергоспоживання родини».
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="text-xs font-medium text-teal-600 flex items-center gap-1">
+                            <i data-lucide="cpu" class="w-4 h-4"></i> Код + Чек-лист
+                        </span>
+                        <button onclick="openModal('python-9')" class="inline-flex items-center gap-1.5 text-sm font-semibold text-indigo-600 hover:text-indigo-800">
+                            <span>Відкрити</span>
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Картка 6: 10-11 класи (Машинне навчання) -->
+                <article class="student-card bg-white rounded-3xl p-6 border border-slate-200/80 shadow-soft hover:shadow-lg transition-all flex flex-col justify-between" data-grade="10-11">
+                    <div>
+                        <div class="flex items-center justify-between gap-2 mb-4">
+                            <span class="px-3 py-1 rounded-full text-xs font-bold bg-purple-100 text-purple-800">10–11 класи</span>
+                            <span class="text-xs font-mono text-slate-400">AI &amp; Data Science</span>
+                        </div>
+                        <div class="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center mb-4">
+                            <i data-lucide="brain-circuit" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900">Навчання власної нейромережі (Teachable Machine)</h3>
+                        <p class="mt-2 text-sm text-slate-600 leading-relaxed">
+                            Як машини розпізнають зображення та звуки? Створюємо датасет, тренуємо модель комп'ютерного зору та аналізуємо етику ШІ.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="text-xs font-medium text-teal-600 flex items-center gap-1">
+                            <i data-lucide="sparkles" class="w-4 h-4"></i> Лабораторна робота
+                        </span>
+                        <button onclick="openModal('ai-10-11')" class="inline-flex items-center gap-1.5 text-sm font-semibold text-indigo-600 hover:text-indigo-800">
+                            <span>Відкрити</span>
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. РОЗДІЛ «КОЛЕГАМ: ШІ-МАЙСТЕРНЯ» -->
+    <section id="colleagues" class="py-20 bg-white border-t border-slate-200/70">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-14">
+                <span class="text-xs font-bold uppercase tracking-wider text-teal-700 bg-teal-100 px-3 py-1.5 rounded-full">Методичний хаб</span>
+                <h2 class="mt-3 text-3xl sm:text-4xl font-bold text-slate-900">Колегам: ШІ-майстерня та інклюзія</h2>
+                <p class="mt-4 text-slate-600 text-lg">Ділюся перевіреними інструментами штучного інтелекту, готовими промптами для підготовки до уроків та напрацюваннями з цифрової інклюзії.</p>
+            </div>
+
+            <!-- Інструменти ШІ в освіті -->
+            <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-14">
+                <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200/80 hover:border-indigo-400 transition-all">
+                    <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center mb-3 font-bold">G</div>
+                    <h3 class="font-bold text-slate-900">Google Gemini</h3>
+                    <p class="mt-1.5 text-xs text-slate-600 leading-relaxed">Генерація диференційованих завдань, рубрик оцінювання та сценаріїв STEM-уроків.</p>
+                </div>
+
+                <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200/80 hover:border-teal-400 transition-all">
+                    <div class="w-10 h-10 rounded-xl bg-teal-100 text-teal-600 flex items-center justify-center mb-3 font-bold">NB</div>
+                    <h3 class="font-bold text-slate-900">NotebookLM</h3>
+                    <p class="mt-1.5 text-xs text-slate-600 leading-relaxed">Аналіз навчальних програм, створення аудіо-підкастів за параграфом та персональних гайдів.</p>
+                </div>
+
+                <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200/80 hover:border-sky-400 transition-all">
+                    <div class="w-10 h-10 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center mb-3 font-bold">TM</div>
+                    <h3 class="font-bold text-slate-900">Teachable Machine</h3>
+                    <p class="mt-1.5 text-xs text-slate-600 leading-relaxed">Наочне навчання моделей машинного навчання без написання складного коду за 10 хвилин.</p>
+                </div>
+
+                <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200/80 hover:border-purple-400 transition-all">
+                    <div class="w-10 h-10 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center mb-3 font-bold">C</div>
+                    <h3 class="font-bold text-slate-900">Canva Magic Studio</h3>
+                    <p class="mt-1.5 text-xs text-slate-600 leading-relaxed">Візуалізація інфографіки, створення інтерактивних карток та адаптивних презентацій.</p>
+                </div>
+
+                <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200/80 hover:border-amber-400 transition-all sm:col-span-2 lg:col-span-1">
+                    <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center mb-3 font-bold">CP</div>
+                    <h3 class="font-bold text-slate-900">Curipod</h3>
+                    <p class="mt-1.5 text-xs text-slate-600 leading-relaxed">Інтерактивні уроки з миттєвим ШІ-фідбеком для кожного учня в реальному часі.</p>
+                </div>
+            </div>
+
+            <!-- Бібліотека готових промптів + Інклюзивні розробки -->
+            <div class="grid lg:grid-cols-12 gap-8">
+                <!-- Бібліотека промптів (7 колонок) -->
+                <div class="lg:col-span-7 bg-slate-900 rounded-3xl p-6 sm:p-8 text-white shadow-xl">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-teal-500/20 text-teal-300 flex items-center justify-center">
+                                <i data-lucide="terminal-square" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold">Бібліотека промптів для вчителя</h3>
+                                <p class="text-xs text-slate-400">Натисніть «Копіювати», щоб використати в Gemini</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <!-- Промпт 1 -->
+                        <div class="p-4 rounded-2xl bg-slate-800/90 border border-slate-700">
+                            <div class="flex items-center justify-between gap-2 mb-2">
+                                <span class="text-xs font-semibold text-teal-400 uppercase tracking-wider">Адаптація тексту (Інклюзія)</span>
+                                <button onclick="copyPrompt('prompt-1', this)" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-700 hover:bg-teal-600 text-xs font-medium text-white transition-colors">
+                                    <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                                    <span>Копіювати</span>
+                                </button>
+                            </div>
+                            <p id="prompt-1" class="text-xs sm:text-sm text-slate-200 font-mono leading-relaxed">
+                                Ти — методист з інклюзивної освіти. Адаптуй пояснення теми «Цикли з лічильником у Python» для учня 8 класу з особливими освітніми потребами. Використай короткі речення, аналогію з повсякденного життя, виділи 3 ключові слова та створи 2 прості покрокові вправи з підказками.
+                            </p>
+                        </div>
+
+                        <!-- Промпт 2 -->
+                        <div class="p-4 rounded-2xl bg-slate-800/90 border border-slate-700">
+                            <div class="flex items-center justify-between gap-2 mb-2">
+                                <span class="text-xs font-semibold text-indigo-400 uppercase tracking-wider">STEM-інтеграція та кейси</span>
+                                <button onclick="copyPrompt('prompt-2', this)" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-700 hover:bg-indigo-600 text-xs font-medium text-white transition-colors">
+                                    <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                                    <span>Копіювати</span>
+                                </button>
+                            </div>
+                            <p id="prompt-2" class="text-xs sm:text-sm text-slate-200 font-mono leading-relaxed">
+                                Створи сценарій інтегрованого міні-проєкту для 7 класу, який поєднує 3D-моделювання в Aladdin та фізику (тема: енергозбереження). Запропонуй критерії оцінювання у вигляді зрозумілої таблиці на 12 балів.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Матеріали вебінарів та інклюзивні розробки (5 колонок) -->
+                <div class="lg:col-span-5 flex flex-col justify-between space-y-5">
+                    <div class="p-6 rounded-3xl bg-indigo-50/70 border border-indigo-100">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-10 h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center">
+                                <i data-lucide="accessibility" class="w-5 h-5"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-slate-900">Інклюзивні методичні розробки</h3>
+                        </div>
+                        <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                            Авторський посібник «Цифрові інструменти підтримки учнів з ООП на уроках інформатики»: візуальні алгоритми, шаблони з високою контрастністю та голосовий супровід.
+                        </p>
+                        <button onclick="openModal('inclusive-guide')" class="inline-flex items-center gap-2 text-sm font-semibold text-indigo-700 hover:text-indigo-900">
+                            <span>Ознайомитися з методикою</span>
+                            <i data-lucide="external-link" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+
+                    <div class="p-6 rounded-3xl bg-teal-50/70 border border-teal-100">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-10 h-10 rounded-xl bg-teal-600 text-white flex items-center justify-center">
+                                <i data-lucide="presentation" class="w-5 h-5"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-slate-900">Вебінари та відкриті уроки</h3>
+                        </div>
+                        <ul class="space-y-2.5 text-sm text-slate-700">
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="check" class="w-4 h-4 text-teal-600 shrink-0 mt-1"></i>
+                                <span>Воркшоп «NotebookLM як другий мозок сучасного педагога»</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="check" class="w-4 h-4 text-teal-600 shrink-0 mt-1"></i>
+                                <span>Відкритий урок «Штучний інтелект: помічник чи загроза?» (9 клас)</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="check" class="w-4 h-4 text-teal-600 shrink-0 mt-1"></i>
+                                <span>Майстер-клас «Креативне програмування в Processing»</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. РОЗДІЛ «БАТЬКАМ (9 КЛАС ТА ЦИФРОВА БЕЗПЕКА)» -->
+    <section id="parents" class="py-20 bg-slate-50 border-t border-slate-200/70">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-14">
+                <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 bg-indigo-100 px-3 py-1.5 rounded-full">Партнерство родини та школи</span>
+                <h2 class="mt-3 text-3xl sm:text-4xl font-bold text-slate-900">Батькам: 9 клас та цифрова безпека</h2>
+                <p class="mt-4 text-slate-600 text-lg">Інформація для батьків мого 9 класу, поради щодо захисту підлітків в інтернеті та графік індивідуальних консультацій.</p>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-8">
+                <!-- Колонка 1: Кібербезпека підлітків -->
+                <div class="bg-white rounded-3xl p-7 border border-slate-200/80 shadow-soft">
+                    <div class="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center mb-5">
+                        <i data-lucide="shield-alert" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Кібербезпека підлітків</h3>
+                    <p class="text-sm text-slate-600 mb-5">Ключові правила, які варто обговорити з дитиною вдома без заборон, але з довірою:</p>
+                    <ul class="space-y-3 text-sm text-slate-700">
+                        <li class="flex items-start gap-2.5">
+                            <span class="w-5 h-5 rounded-full bg-rose-100 text-rose-700 text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">1</span>
+                            <span><strong>Двофакторна автентифікація (2FA)</strong> у Telegram, Instagram та Google-акаунтах для захисту від зламу.</span>
+                        </li>
+                        <li class="flex items-start gap-2.5">
+                            <span class="w-5 h-5 rounded-full bg-rose-100 text-rose-700 text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">2</span>
+                            <span><strong>Цифровий слід та діпфейки:</strong> критичне ставлення до підозрілих посилань, «легкого заробітку» в мережі та ШІ-маніпуляцій.</span>
+                        </li>
+                        <li class="flex items-start gap-2.5">
+                            <span class="w-5 h-5 rounded-full bg-rose-100 text-rose-700 text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">3</span>
+                            <span><strong>Цифровий баланс:</strong> здоровий режим сну без гаджетів за 1 годину до відпочинку.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Колонка 2: Путівник для батьків 9-класників -->
+                <div class="bg-white rounded-3xl p-7 border border-slate-200/80 shadow-soft">
+                    <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center mb-5">
+                        <i data-lucide="compass" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Навігатор 9 класу</h3>
+                    <p class="text-sm text-slate-600 mb-5">9 клас — важливий етап вибору освітньої траєкторії. Корисні орієнтири для батьків:</p>
+                    <div class="space-y-3">
+                        <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-100">
+                            <h4 class="text-sm font-bold text-slate-900">Профорієнтаційна діагностика</h4>
+                            <p class="text-xs text-slate-600 mt-1">Допомагаємо визначити сильні сторони: ІТ, інженерія, природничі науки чи гуманітарний профіль у 10–11 класах ліцею.</p>
+                        </div>
+                        <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-100">
+                            <h4 class="text-sm font-bold text-slate-900">Електронний щоденник та зв'язок</h4>
+                            <p class="text-xs text-slate-600 mt-1">Оперативне інформування про успішність, олімпіади та позакласні заходи нашого класу.</p>
+                        </div>
+                        <button onclick="openModal('parents-9-guide')" class="w-full mt-2 py-2.5 px-4 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-sm font-semibold transition-colors">
+                            Переглянути пам'ятку батькам 9 класу
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Колонка 3: Графік консультацій -->
+                <div class="bg-gradient-to-br from-indigo-900 to-slate-900 rounded-3xl p-7 text-white shadow-xl flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-2xl bg-teal-500/20 text-teal-300 flex items-center justify-center mb-5">
+                            <i data-lucide="calendar-clock" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Графік консультацій</h3>
+                        <p class="text-sm text-slate-300 mb-6">Завжди відкрита до діалогу щодо успішності з інформатики або питань класного керівництва.</p>
+                        
+                        <div class="space-y-3 text-sm">
+                            <div class="flex items-center justify-between p-3 rounded-xl bg-white/10">
+                                <span class="text-slate-200">Вівторок (очно в ліцеї)</span>
+                                <span class="font-mono font-semibold text-teal-300">15:00 – 16:30</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 rounded-xl bg-white/10">
+                                <span class="text-slate-200">Четвер (Google Meet)</span>
+                                <span class="font-mono font-semibold text-teal-300">17:00 – 18:00</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 rounded-xl bg-white/10">
+                                <span class="text-slate-200">Батьківський чат / Е-щоденник</span>
+                                <span class="font-mono font-semibold text-teal-300">Пн–Пт</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="#contacts" class="mt-6 w-full inline-flex items-center justify-center gap-2 py-3.5 px-5 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold text-sm transition-colors">
+                        <span>Записатися на індивідуальну зустріч</span>
+                        <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. РОЗДІЛ «ПОРТФОЛІО ТА ДОСЯГНЕННЯ» -->
+    <section id="achievements" class="py-20 bg-white border-t border-slate-200/70">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-xs font-bold uppercase tracking-wider text-teal-700 bg-teal-100 px-3 py-1.5 rounded-full">Професійний розвиток</span>
+                <h2 class="mt-3 text-3xl sm:text-4xl font-bold text-slate-900">Портфоліо, проєкти та сертифікати</h2>
+                <p class="mt-4 text-slate-600 text-lg">Результати впровадження інновацій в освітній процес Щасливського академічного ліцею.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Досягнення 1: Google AI Academy -->
+                <div class="group rounded-3xl bg-slate-50 border border-slate-200/80 overflow-hidden hover:shadow-xl transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="h-44 bg-gradient-to-r from-indigo-600 via-blue-600 to-teal-500 p-6 flex flex-col justify-between text-white relative">
+                            <span class="self-start px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm text-xs font-semibold">Сертифікація Google</span>
+                            <div>
+                                <i data-lucide="award" class="w-9 h-9 mb-1 text-teal-200"></i>
+                                <h3 class="text-xl font-bold">AI Academy for Educators</h3>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <p class="text-sm text-slate-600 leading-relaxed">
+                                Успішне завершення спеціалізованої програми від Google з впровадження інструментів штучного інтелекту (Gemini, NotebookLM) в освіту та безпечного використання ШІ учнями.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 flex items-center justify-between text-xs font-mono text-slate-500">
+                        <span>Google for Education</span>
+                        <span class="text-indigo-600 font-semibold">Сертифікований тренер</span>
+                    </div>
+                </div>
+
+                <!-- Досягнення 2: STEM-лабораторія -->
+                <div class="group rounded-3xl bg-slate-50 border border-slate-200/80 overflow-hidden hover:shadow-xl transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="h-44 bg-gradient-to-r from-teal-600 to-emerald-500 p-6 flex flex-col justify-between text-white relative">
+                            <span class="self-start px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm text-xs font-semibold">STEM-проєкт</span>
+                            <div>
+                                <i data-lucide="zap" class="w-9 h-9 mb-1 text-amber-200"></i>
+                                <h3 class="text-xl font-bold">Цифрова STEM-лабораторія</h3>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <p class="text-sm text-slate-600 leading-relaxed">
+                                Керівництво учнівським проєктом з енергоефективності: створення 3D-моделей будівель в Aladdin, розрахунок сонячної генерації та аналіз даних у Python.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 flex items-center justify-between text-xs font-mono text-slate-500">
+                        <span>Щасливський ліцей</span>
+                        <span class="text-teal-600 font-semibold">Еко-інновації</span>
+                    </div>
+                </div>
+
+                <!-- Досягнення 3: Спікерство та методичні публікації -->
+                <div class="group rounded-3xl bg-slate-50 border border-slate-200/80 overflow-hidden hover:shadow-xl transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="h-44 bg-gradient-to-r from-slate-800 to-indigo-900 p-6 flex flex-col justify-between text-white relative">
+                            <span class="self-start px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm text-xs font-semibold">Виступи та досвід</span>
+                            <div>
+                                <i data-lucide="mic-2" class="w-9 h-9 mb-1 text-indigo-300"></i>
+                                <h3 class="text-xl font-bold">Педагогічні конференції</h3>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <p class="text-sm text-slate-600 leading-relaxed">
+                                Спікерка обласних методичних об'єднань вчителів інформатики Київщини. Поширення практик цифрової інклюзії та використання ШІ для зменшення рутини педагога.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 flex items-center justify-between text-xs font-mono text-slate-500">
+                        <span>Київська область</span>
+                        <span class="text-indigo-600 font-semibold">Обмін досвідом</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. ІНТЕРАКТИВНА ФОРМА ЗВОРОТНОГО ЗВ'ЯЗКУ ТА КОНТАКТИ -->
+    <section id="contacts" class="py-20 bg-slate-900 text-white relative overflow-hidden">
+        <!-- Фоновий декор -->
+        <div class="absolute top-0 right-0 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-12 gap-12 items-start">
+                
+                <!-- Ліва колонка: Контакти ліцею та інформація -->
+                <div class="lg:col-span-5 space-y-8">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-teal-400 bg-teal-500/10 border border-teal-500/20 px-3 py-1.5 rounded-full">Зв'язок</span>
+                        <h2 class="mt-4 text-3xl sm:text-4xl font-bold">Зв'язатися зі мною</h2>
+                        <p class="mt-4 text-slate-300 leading-relaxed">
+                            Маєте запитання щодо домашнього завдання, проєкту з інформатики, життя 9 класу чи бажаєте обговорити співпрацю у сфері ШІ в освіті? Напишіть мені!
+                        </p>
+                    </div>
+
+                    <div class="space-y-5">
+                        <div class="flex items-start gap-4">
+                            <div class="w-11 h-11 rounded-2xl bg-white/10 text-teal-400 flex items-center justify-center shrink-0">
+                                <i data-lucide="school" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-white">Заклад освіти</h3>
+                                <p class="text-sm text-slate-300 mt-0.5">Щасливський академічний ліцей Пристоличної сільської ради</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="w-11 h-11 rounded-2xl bg-white/10 text-indigo-400 flex items-center justify-center shrink-0">
+                                <i data-lucide="map-pin" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-white">Локація</h3>
+                                <p class="text-sm text-slate-300 mt-0.5">вул. Лесі Українки, 14, с. Щасливе, Бориспільський район, Київська область, 08325</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="w-11 h-11 rounded-2xl bg-white/10 text-sky-400 flex items-center justify-center shrink-0">
+                                <i data-lucide="mail" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-white">Електронна пошта</h3>
+                                <p class="text-sm text-slate-300 mt-0.5 font-mono">d.boiko.cs@shchaslyve-lyceum.edu.ua</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Соціальні / освітні платформи -->
+                    <div class="pt-4 border-t border-slate-800">
+                        <p class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3">Освітні платформи</p>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="px-3.5 py-2 rounded-xl bg-slate-800 text-xs font-medium text-slate-200 border border-slate-700">Google Classroom</span>
+                            <span class="px-3.5 py-2 rounded-xl bg-slate-800 text-xs font-medium text-slate-200 border border-slate-700">Нові Знання</span>
+                            <span class="px-3.5 py-2 rounded-xl bg-slate-800 text-xs font-medium text-slate-200 border border-slate-700">Google Meet</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Права колонка: Інтерактивна форма -->
+                <div class="lg:col-span-7 bg-white text-slate-800 rounded-3xl p-6 sm:p-10 shadow-2xl">
+                    <h3 class="text-2xl font-bold text-slate-900 mb-2">Надіслати повідомлення</h3>
+                    <p class="text-sm text-slate-500 mb-6">Оберіть вашу роль, щоб я могла швидше підготувати відповідь.</p>
+
+                    <form id="contact-form" class="space-y-5">
+                        <!-- Вибір ролі -->
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Хто звертається?</label>
+                            <div class="grid grid-cols-3 gap-3">
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="role" value="Учень / Учениця" class="peer sr-only" checked>
+                                    <div class="p-3 rounded-xl border-2 border-slate-200 text-center text-sm font-semibold text-slate-600 peer-checked:border-indigo-600 peer-checked:bg-indigo-50 peer-checked:text-indigo-700 transition-all">
+                                        🎓 Учень
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="role" value="Батьки" class="peer sr-only">
+                                    <div class="p-3 rounded-xl border-2 border-slate-200 text-center text-sm font-semibold text-slate-600 peer-checked:border-indigo-600 peer-checked:bg-indigo-50 peer-checked:text-indigo-700 transition-all">
+                                        👨‍👩‍👧 Батьки
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="role" value="Колега" class="peer sr-only">
+                                    <div class="p-3 rounded-xl border-2 border-slate-200 text-center text-sm font-semibold text-slate-600 peer-checked:border-indigo-600 peer-checked:bg-indigo-50 peer-checked:text-indigo-700 transition-all">
+                                        💡 Колега
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="grid sm:grid-cols-2 gap-4">
+                            <div>
+                                <label for="sender-name" class="block text-sm font-semibold text-slate-700 mb-1.5">Ваше ім'я та прізвище *</label>
+                                <input type="text" id="sender-name" required placeholder="Наприклад: Олена Коваленко" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 outline-none transition-all text-sm">
+                            </div>
+                            <div>
+                                <label for="sender-contact" class="block text-sm font-semibold text-slate-700 mb-1.5">Email або Telegram для відповіді *</label>
+                                <input type="text" id="sender-contact" required placeholder="@username або email@gmail.com" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 outline-none transition-all text-sm">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="sender-topic" class="block text-sm font-semibold text-slate-700 mb-1.5">Тема звернення</label>
+                            <select id="sender-topic" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 outline-none transition-all text-sm">
+                                <option value="Консультація щодо уроку / проєкту">Консультація щодо уроку / проєкту</option>
+                                <option value="Питання класного керівництва (9 клас)">Питання класного керівництва (9 клас)</option>
+                                <option value="Співпраця / ШІ в освіті / Інклюзія">Співпраця / ШІ в освіті / Інклюзія</option>
+                                <option value="Інше питання">Інше питання</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="sender-message" class="block text-sm font-semibold text-slate-700 mb-1.5">Повідомлення *</label>
+                            <textarea id="sender-message" rows="4" required placeholder="Опишіть ваше запитання або пропозицію..." class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 outline-none transition-all text-sm resize-none"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full py-4 px-6 rounded-xl bg-gradient-to-r from-indigo-600 to-teal-500 hover:from-indigo-700 hover:to-teal-600 text-white font-bold text-base shadow-lg shadow-indigo-600/20 transition-all flex items-center justify-center gap-2 active:scale-[0.99]">
+                            <i data-lucide="send" class="w-5 h-5"></i>
+                            <span>Надіслати звернення</span>
+                        </button>
+                    </form>
+
+                    <!-- Повідомлення про успішну відправку (замість alert) -->
+                    <div id="form-success-box" class="hidden mt-6 p-5 rounded-2xl bg-teal-50 border border-teal-200 text-teal-900">
+                        <div class="flex items-start gap-3">
+                            <i data-lucide="check-circle-2" class="w-6 h-6 text-teal-600 shrink-0 mt-0.5"></i>
+                            <div>
+                                <h4 class="font-bold text-base">Дякую! Ваше повідомлення успішно надіслано.</h4>
+                                <p id="form-success-details" class="text-sm text-teal-800 mt-1"></p>
+                                <button onclick="resetContactForm()" class="mt-3 text-xs font-bold uppercase tracking-wider text-teal-700 underline hover:text-teal-900">
+                                    Надіслати ще одне повідомлення
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ФУТЕР -->
+    <footer class="bg-slate-950 text-slate-400 py-10 border-t border-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <span class="w-8 h-8 rounded-lg bg-indigo-600/20 text-indigo-400 font-mono font-bold flex items-center justify-center text-sm">&lt;/&gt;</span>
+                <span class="text-sm font-medium text-slate-300">© 2026 Діана Бойко • Вчитель інформатики</span>
+            </div>
+            <p class="text-xs text-slate-500 text-center sm:text-right">
+                Щасливський академічний ліцей • Створено з любов'ю до освіти та технологій
+            </p>
+        </div>
+    </footer>
+
+    <!-- МОДАЛЬНЕ ВІКНО ДЛЯ ДЕТАЛЕЙ МАТЕРІАЛІВ -->
+    <div id="material-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-200 animate-fadeIn">
+            <div class="sticky top-0 bg-white/95 backdrop-blur px-6 py-5 border-b border-slate-100 flex items-center justify-between">
+                <span id="modal-badge" class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-800">Матеріал</span>
+                <button onclick="closeModal()" aria-label="Закрити вікно" class="p-2 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <div class="p-6 sm:p-8">
+                <h3 id="modal-title" class="text-2xl font-bold text-slate-900 mb-4">Заголовок матеріалу</h3>
+                <div id="modal-body" class="space-y-4 text-slate-600 text-sm sm:text-base leading-relaxed">
+                    <!-- Контент підставляється через JS -->
+                </div>
+                <div class="mt-8 pt-5 border-t border-slate-100 flex justify-end gap-3">
+                    <button onclick="closeModal()" class="px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold text-sm transition-colors">
+                        Закрити
+                    </button>
+                    <a href="#contacts" onclick="closeModal()" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm transition-colors">
+                        Задати питання вчителю
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Спливаюче сповіщення (Toast) замість alert -->
+    <div id="toast-notification" class="fixed bottom-5 right-5 z-50 hidden items-center gap-2.5 bg-slate-900 text-white px-5 py-3.5 rounded-2xl shadow-2xl border border-slate-700 text-sm font-medium">
+        <i data-lucide="check-circle" class="w-5 h-5 text-teal-400"></i>
+        <span id="toast-text">Скопійовано!</span>
+    </div>
+
+    <!-- JAVASCRIPT ЛОГІКА -->
+    <script>
+        // Ініціалізація іконок Lucide
+        lucide.createIcons();
+
+        // 1. Мобільне меню
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // 2. Інтерактивний фільтр по класах у розділі «Учням»
+        const filterButtons = document.querySelectorAll('.grade-filter-btn');
+        const studentCards = document.querySelectorAll('.student-card');
+
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Оновлення активного стилю кнопок
+                filterButtons.forEach(b => {
+                    b.classList.remove('bg-indigo-600', 'text-white', 'shadow-sm');
+                    b.classList.add('text-slate-600', 'hover:bg-slate-100');
+                });
+                btn.classList.add('bg-indigo-600', 'text-white', 'shadow-sm');
+                btn.classList.remove('text-slate-600', 'hover:bg-slate-100');
+
+                const selectedGrade = btn.getAttribute('data-grade');
+
+                studentCards.forEach(card => {
+                    const cardGrade = card.getAttribute('data-grade');
+                    if (selectedGrade === 'all' || cardGrade === selectedGrade) {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+            });
+        });
+
+        // 3. База контенту для модальних вікон
+        const modalContentData = {
+            'scratch-5-6': {
+                badge: '5–6 класи • Scratch',
+                title: 'Інтерактивна еко-гра «Сортуй сміття правильно»',
+                body: `
+                    <p><strong>Мета практикуму:</strong> закріпити вміння використовувати розгалуження (якщо-то-інакше), цикли та змінні для підрахунку балів.</p>
+                    <div class="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-950">
+                        <h4 class="font-bold mb-2">Етапи виконання:</h4>
+                        <ol class="list-decimal list-inside space-y-1.5 text-sm">
+                            <li>Обери 3 спрайти контейнерів (Папір, Пластик, Скло) та розмісти їх у нижній частині сцени.</li>
+                            <li>Створи спрайт «Відходи» з різними образами та запрограмуй його падіння зверху вниз.</li>
+                            <li>Додай керування стрілками вліво/вправо та перевірку дотику до відповідного контейнера.</li>
+                            <li>За кожне правильне сортування нараховуй +10 балів у змінну <code>Рахунок</code>.</li>
+                        </ol>
+                    </div>
+                    <p class="text-sm text-slate-500">Підказка: для учнів, які бажають ускладнити гру, додайте таймер зворотного відліку на 60 секунд!</p>
+                `
+            },
+            'cyber-5-6': {
+                badge: '5–6 класи • Кібербезпека',
+                title: 'Пам’ятка кібер-захисника: Надійні паролі та антифішинг',
+                body: `
+                    <p>Твій пароль — це ключ від цифрової оселі. Ось 4 золоті правила безпеки:</p>
+                    <ul class="space-y-2 text-sm bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                        <li>✅ <strong>Довжина має значення:</strong> використовуй щонайменше 12 символів (великі та малі літери, цифри, спецсимволи).</li>
+                        <li>✅ <strong>Правило парольної фрази:</strong> придумай рядок з улюбленої книги або пісні та заміни частину літер на цифри (наприклад: <code>Moya_Knyga_2026!</code>).</li>
+                        <li>❌ <strong>Ніколи не переходь за посиланнями</strong> на кшталт «Тобі подарували Telegram Premium — натисни тут!».</li>
+                        <li>✅ <strong>Перевіряй адресу сайту:</strong> шахраї часто змінюють одну літеру у відомій назві.</li>
+                    </ul>
+                `
+            },
+            'processing-7-8': {
+                badge: '7–8 класи • Processing',
+                title: 'Креативне програмування: Інтерактивні кола в Processing',
+                body: `
+                    <p>Спробуй запустити цей базовий скетч у середовищі <strong>Processing</strong> (режим Java), щоб створити пензель, який реагує на рух миші:</p>
+                    <pre class="p-4 rounded-2xl bg-slate-900 text-teal-300 font-mono text-xs overflow-x-auto"><code>void setup() {
+  size(800, 600);
+  background(15, 23, 42);
+  noStroke();
+}
+
+void draw() {
+  // Колір залежить від координат курсора
+  fill(mouseX % 255, 180, mouseY % 255, 120);
+  float d = dist(mouseX, mouseY, pmouseX, pmouseY);
+  ellipse(mouseX, mouseY, d + 15, d + 15);
+}
+
+void mousePressed() {
+  background(15, 23, 42); // Очистити полотно кліком
+}</code></pre>
+                    <p class="text-sm"><strong>Завдання:</strong> зміни форму з еліпса на прямокутник (<code>rect</code>) та додай зміну кольору при натисканні клавіші пробілу.</p>
+                `
+            },
+            'aladdin-7-8': {
+                badge: '7–8 класи • 3D-моделювання',
+                title: 'STEM-проєкт: Енергоефективний будинок в Aladdin',
+                body: `
+                    <p>У середовищі <strong>Aladdin</strong> ми поєднуємо 3D-проєктування та закони фізики для дослідження відновлюваної енергетики.</p>
+                    <div class="p-4 rounded-2xl bg-teal-50 border border-teal-200 text-teal-950 text-sm space-y-2">
+                        <p><strong>Завдання лабораторії:</strong></p>
+                        <p>1. Побудуй 3D-модель одноповерхового будинку розміром 10×8 метрів.</p>
+                        <p>2. Розмісти найбільші вікна на південному фасаді для пасивного сонячного обігріву взимку.</p>
+                        <p>3. Додай сонячні панелі на дах під оптимальним кутом нахилу для Київської області (35–40°).</p>
+                        <p>4. Запусти симуляцію річного енергобалансу та порівняй витрати до і після утеплення стін.</p>
+                    </div>
+                `
+            },
+            'python-9': {
+                badge: '9 клас • Python',
+                title: 'Практична робота: Калькулятор енергоспоживання на Python',
+                body: `
+                    <p>Використовуємо словники та цикли в <strong>Python</strong> для аналізу споживання електроенергії побутовими приладами:</p>
+                    <pre class="p-4 rounded-2xl bg-slate-900 text-sky-300 font-mono text-xs overflow-x-auto"><code># Потужність приладів у кВт та години роботи на день
+appliances = {
+    "Холодильник": (0.15, 24),
+    "Ноутбук": (0.065, 6),
+    "LED-освітлення": (0.08, 5),
+    "Пральна машина": (1.8, 1)
+}
+
+tariff = 4.32  # грн за 1 кВт·год
+total_kwh = 0
+
+for name, (power, hours) in appliances.items():
+    daily_kwh = power * hours
+    total_kwh += daily_kwh
+    print(f"{name}: {daily_kwh:.2f} кВт·год/день")
+
+print(f"\nВитрати за місяць (30 днів): {total_kwh * 30 * tariff:.2f} грн")</code></pre>
+                    <p class="text-sm"><strong>Творче завдання:</strong> додай можливість користувачеві самостійно вводити власні прилади з клавіатури.</p>
+                `
+            },
+            'ai-10-11': {
+                badge: '10–11 класи • Машинне навчання',
+                title: 'Лабораторна робота: Створення моделі в Google Teachable Machine',
+                body: `
+                    <p>Досліджуємо, як працює навчання з учителем (Supervised Learning) на прикладі розпізнавання жестів або рослин.</p>
+                    <ol class="list-decimal list-inside space-y-2 text-sm bg-purple-50 p-4 rounded-2xl border border-purple-200 text-purple-950">
+                        <li>Відкрий платформу <strong>Teachable Machine</strong> та обери <em>Image Project</em>.</li>
+                        <li>Створи 3 класи (наприклад: «Жест Камінь», «Жест Ножиці», «Жест Папір»).</li>
+                        <li>Збери по 40–50 зразків для кожного класу під різним освітленням та кутами (важливість якісного датасету!).</li>
+                        <li>Натисни <em>Train Model</em> та протестуй точність розпізнавання на вебкамері.</li>
+                        <li><strong>Висновок для захисту:</strong> опиши, у яких випадках модель помиляється і чому виникає упередженість даних (AI Bias).</li>
+                    </ol>
+                `
+            },
+            'inclusive-guide': {
+                badge: 'Колегам • Цифрова інклюзія',
+                title: 'Методичні принципи цифрової інклюзії на уроках інформатики',
+                body: `
+                    <p>Інклюзивне навчання в цифровому середовищі базується на принципах універсального дизайну в навчанні (UDL):</p>
+                    <ul class="space-y-2.5 text-sm">
+                        <li>🔹 <strong>Мультимодальність подачі матеріалу:</strong> поєднання текстової інструкції, візуальної блок-схеми та короткого скринкасту (відео без зайвого шуму).</li>
+                        <li>🔹 <strong>Структуровані шаблони коду:</strong> замість порожнього екрана учень отримує каркас програми з коментарями-підказками, де потрібно заповнити ключові рядки.</li>
+                        <li>🔹 <strong>Використання ШІ для адаптації:</strong> спрощення складних термінів за допомогою Google Gemini та озвучування текстів через вбудовані інструменти читання.</li>
+                        <li>🔹 <strong>Ситуація успіху:</strong> багаторівневі завдання, де кожен учень бачить реальний візуальний результат своєї роботи вже на 10-й хвилині уроку.</li>
+                    </ul>
+                `
+            },
+            'parents-9-guide': {
+                badge: 'Батькам • 9 клас',
+                title: 'Пам’ятка для батьків дев’ятикласників: Як підтримати підлітка',
+                body: `
+                    <p>9 клас поєднує підготовку до завершення базової середньої освіти та вибір майбутнього профілю. Кілька порад від класного керівника:</p>
+                    <ul class="space-y-2.5 text-sm bg-indigo-50/70 p-4 rounded-2xl border border-indigo-100">
+                        <li>🌟 <strong>Фокус на сильних сторонах:</strong> обговорюйте не лише оцінки, а й те, які предмети та проєкти приносять дитині справжній інтерес.</li>
+                        <li>🌟 <strong>Пробні профорієнтаційні кроки:</strong> заохочуйте участь у хакатонах, гуртках, предметних тижнях та днях відкритих дверей.</li>
+                        <li>🌟 <strong>Емоційна підтримка:</strong> підліткам важливо знати, що помилка — це частина навчання, а не катастрофа.</li>
+                        <li>🌟 <strong>Регулярний контакт:</strong> за потреби звертайтеся на індивідуальні консультації — разом ми завжди знайдемо найкраще рішення.</li>
+                    </ul>
+                `
+            }
+        };
+
+        const modal = document.getElementById('material-modal');
+        const modalBadge = document.getElementById('modal-badge');
+        const modalTitle = document.getElementById('modal-title');
+        const modalBody = document.getElementById('modal-body');
+
+        function openModal(key) {
+            const data = modalContentData[key];
+            if (!data) return;
+
+            modalBadge.textContent = data.badge;
+            modalTitle.textContent = data.title;
+            modalBody.innerHTML = data.body;
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = '';
+        }
+
+        // Закриття модального вікна при кліку поза ним або клавішею Escape
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                closeModal();
+            }
+        });
+
+        // 4. Копіювання промптів (сумісне з iframe через execCommand)
+        function copyPrompt(elementId, btnElement) {
+            const text = document.getElementById(elementId).innerText.trim();
+            const tempTextArea = document.createElement('textarea');
+            tempTextArea.value = text;
+            tempTextArea.style.position = 'fixed';
+            tempTextArea.style.left = '-9999px';
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+
+            try {
+                document.execCommand('copy');
+                showToast('Промпт скопійовано в буфер обміну!');
+                
+                const span = btnElement.querySelector('span');
+                const originalText = span.textContent;
+                span.textContent = 'Скопійовано!';
+                setTimeout(() => {
+                    span.textContent = originalText;
+                }, 2000);
+            } catch (err) {
+                showToast('Не вдалося скопіювати текст');
+            } finally {
+                document.body.removeChild(tempTextArea);
+            }
+        }
+
+        // 5. Спливаюче сповіщення (Toast)
+        let toastTimeout;
+        function showToast(message) {
+            const toast = document.getElementById('toast-notification');
+            const toastText = document.getElementById('toast-text');
+            toastText.textContent = message;
+            
+            toast.classList.remove('hidden');
+            toast.classList.add('flex');
+
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.add('hidden');
+                toast.classList.remove('flex');
+            }, 3000);
+        }
+
+        // 6. Обробка форми зворотного зв'язку
+        const contactForm = document.getElementById('contact-form');
+        const successBox = document.getElementById('form-success-box');
+        const successDetails = document.getElementById('form-success-details');
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const role = document.querySelector('input[name="role"]:checked').value;
+            const name = document.getElementById('sender-name').value.trim();
+            const contact = document.getElementById('sender-contact').value.trim();
+            const topic = document.getElementById('sender-topic').value;
+
+            successDetails.textContent = `Відправник: ${name} (${role}). Тема: «${topic}». Відповідь буде надіслано на: ${contact}.`;
+            
+            contactForm.classList.add('hidden');
+            successBox.classList.remove('hidden');
+            showToast('Повідомлення надіслано!');
+        });
+
+        function resetContactForm() {
+            contactForm.reset();
+            successBox.classList.add('hidden');
+            contactForm.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
